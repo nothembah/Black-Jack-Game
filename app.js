@@ -1,129 +1,159 @@
-var start = document.querySelector('#new');
-var hit = document.querySelector('#hit');
-var end = document.querySelector('#stand');
-var playerCards = document.querySelector('.player');
-var dealerCards = document.querySelector('.dealer');
-function startGame() {
-}
-function produceCard() {
-    var num = Math.ceil(Math.random() * 13);
-    var suit = Math.ceil(Math.random() * 4);
-    var cardNum;
-    var cardSuit;
-    var arr = [];
-    var card;
-    switch (num) {
-        case 1:
-            cardNum = 'A';
-            break;
-        case 2:
-            cardNum = '2';
-            break;
-        case 3:
-            cardNum = '3';
-            break;
-        case 4:
-            cardNum = '4';
-            break;
-        case 5:
-            cardNum = '5';
-            break;
-        case 6:
-            cardNum = '6';
-            break;
-        case 7:
-            cardNum = '7';
-            break;
-        case 8:
-            cardNum = '8';
-            break;
-        case 9:
-            cardNum = '9';
-            break;
-        case 10:
-            cardNum = '10';
-            break;
-        case 11:
-            cardNum = 'J';
-            break;
-        case 12:
-            cardNum = 'Q';
-            break;
-        case 13:
-            cardNum = 'K';
-            break;
+var textArea = document.querySelector('.display');
+var newGameButton = document.getElementById('new');
+var hitButton = document.getElementById('hit');
+var stayButton = document.getElementById('stand');
+var suits = ['♥', '♣', '♦', '♠'];
+var values = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
+hitButton.style.display = 'none';
+stayButton.style.display = 'none';
+var gameStart = false, gameOver = false, playerWon = false, dealerCards = [], playerCards = [], dealerScore = 0, playerScore = 0, deck = [];
+newGameButton.addEventListener('click', function () {
+    gameStart = true;
+    gameOver = false;
+    playerWon = false;
+    deck = createDeck();
+    shuffleDeck(deck);
+    dealerCards = [getNextCard(), getNextCard()];
+    playerCards = [getNextCard(), getNextCard()];
+    newGameButton.style.display = 'none';
+    hitButton.style.display = 'inline';
+    stayButton.style.display = 'inline';
+    showStatus();
+});
+function createDeck() {
+    var deck = [];
+    for (var suitIdx = 0; suitIdx < suits.length; suitIdx++) {
+        for (var valueIdx = 0; valueIdx < values.length; valueIdx++) {
+            var card = {
+                suit: suits[suitIdx],
+                value: values[valueIdx]
+            };
+            deck.push(card);
+        }
     }
-    switch (suit) {
-        case 1:
-            cardSuit = '♥';
-            break;
-        case 2:
-            cardSuit = '♦';
-            break;
-        case 3:
-            cardSuit = '♠';
-            break;
-        case 4:
-            cardSuit = '♣';
-            break;
+    return deck;
+}
+function shuffleDeck(deck) {
+    for (var i = 0; i < deck.length; i++) {
+        var swapIdx = Math.floor(Math.random() * deck.length);
+        var tmp = deck[swapIdx];
+        deck[swapIdx] = deck[i];
+        deck[i] = tmp;
     }
-    arr.push(cardNum);
-    arr.push(cardSuit);
-    card = arr.join();
-    calculate(card);
-    return card;
 }
-function hitButton() {
-    var card = produceCard();
-    playerCards.innerHTML += "<h2>" + card + "</h2>";
+hitButton.addEventListener('click', function () {
+    playerCards.push(getNextCard());
+    checkForEndOfGame();
+    showStatus();
+});
+stayButton.addEventListener('click', function () {
+    gameOver = true;
+    checkForEndOfGame();
+    showStatus();
+});
+function checkForEndOfGame() {
+    updateScores();
+    if (gameOver) {
+        while (dealerScore < playerScore && playerScore <= 21 && dealerScore <= 21) {
+            dealerCards.push(getNextCard());
+            updateScores();
+        }
+    }
+    if (playerScore > 21) {
+        playerWon = false;
+        gameOver = true;
+    }
+    else if (dealerScore > 21) {
+        playerWon = true;
+        gameOver = true;
+    }
+    else if (gameOver) {
+        if (playerScore > dealerScore) {
+            playerWon = true;
+        }
+        else {
+            playerWon = false;
+        }
+    }
 }
-function standButton() {
+function getCardString(card) {
+    return card.value + " " + card.suit;
 }
-function calculate(card) {
-    var decider = card[0];
-    switch (decider) {
+function getCardNumericValue(card) {
+    switch (card.value) {
         case 'A':
-            counter++;
-            break;
+            return 1;
         case '2':
-            counter += 2;
-            break;
+            return 2;
         case '3':
-            counter += 3;
-            break;
+            return 3;
         case '4':
-            counter += 4;
-            break;
+            return 4;
         case '5':
-            counter += 5;
-            break;
+            return 5;
         case '6':
-            counter += 6;
-            break;
+            return 6;
         case '7':
-            counter += 7;
-            break;
+            return 7;
         case '8':
-            counter += 8;
-            break;
+            return 8;
         case '9':
-            counter += 9;
-            break;
-        case '10':
-            counter += 10;
-            break;
-        case 'J':
-            counter += 10;
-            break;
-        case 'Q':
-            counter += 10;
-            break;
-        case 'K':
-            counter += 10;
-            break;
+            return 9;
+        default:
+            return 10;
     }
-    return counter;
 }
-function display(counter) {
+function showStatus() {
+    if (!gameStart) {
+        textArea.innerHTML = '<h1>Welcome to Blackjack!</h1>';
+        return;
+    }
+    var dealerCardString = '';
+    for (var i = 0; i < dealerCards.length; i++) {
+        dealerCardString += getCardString(dealerCards[i]) + '\n';
+    }
+    var playerCardString = '';
+    for (var i = 0; i < playerCards.length; i++) {
+        playerCardString += getCardString(playerCards[i]) + '\n';
+    }
+    updateScores();
+    textArea.innerHTML = 'Dealer has:\n' +
+        dealerCardString +
+        '(score: ' + dealerScore + ')\n\n' +
+        'Player has:\n' +
+        playerCardString +
+        '(score: ' + playerScore + ')\n\n';
+    if (gameOver) {
+        if (playerWon) {
+            textArea.innerHTML += "YOU WIN!";
+        }
+        else {
+            textArea.innerHTML += "DEALER WINS";
+        }
+        newGameButton.style.display = 'inline';
+        hitButton.style.display = 'none';
+        stayButton.style.display = 'none';
+    }
 }
-var counter = 0;
+function getScore(cardArray) {
+    var score = 0;
+    var hasAce = false;
+    for (var i = 0; i < cardArray.length; i++) {
+        var card = cardArray[i];
+        score += getCardNumericValue(card);
+        if (card.value == 'A') {
+            hasAce = true;
+        }
+        if (hasAce && score + 10 <= 21) {
+            return score + 10;
+        }
+    }
+    return score;
+}
+function updateScores() {
+    dealerScore = getScore(dealerCards);
+    playerScore = getScore(playerCards);
+}
+function getNextCard() {
+    return deck.shift();
+}
