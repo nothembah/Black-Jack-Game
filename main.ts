@@ -92,3 +92,23 @@ function dealHands()
 
         updateDeck();
     }
+
+
+
+    // let gameStart = false,
+//   gameOver = false,
+//   playWon = false,
+//   dealerCards = [],
+//   playerCards = [],
+//   dealerScore = 0,
+//   playerScore = 0;
+// //   deck = [];
+
+
+// function startGame(){ 
+//     start.addEventListener('click', function() {
+//         gameStart = true;
+//         gameOver = false;
+//         playerWon = false;
+
+// }
