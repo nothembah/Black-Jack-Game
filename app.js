@@ -4,11 +4,11 @@ var player = document.querySelector('.player');
 var winner = document.querySelector('.winner');
 var newGameButton = document.getElementById('new');
 var hitButton = document.getElementById('hit');
-var stayButton = document.getElementById('stand');
+var standButton = document.getElementById('stand');
 var suits = ['♥', '♣', '♦', '♠'];
 var values = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
 hitButton.style.display = 'none';
-stayButton.style.display = 'none';
+standButton.style.display = 'none';
 var gameStart = false, gameOver = false, playerWon = false, dealerWon = false, dealerCards = [], playerCards = [], dealerScore = 0, playerScore = 0, deck = [], hiddenCardValue, hiddenCardSuit;
 function createDeck() {
     var deck = [];
@@ -133,7 +133,7 @@ function showStatus() {
         }
         newGameButton.style.display = 'inline';
         hitButton.style.display = 'none';
-        stayButton.style.display = 'none';
+        standButton.style.display = 'none';
     }
 }
 function getScore(cardArray) {
@@ -178,7 +178,7 @@ newGameButton.addEventListener('click', function () {
     playerCards = [produceCard(), produceCard()];
     newGameButton.style.display = 'none';
     hitButton.style.display = 'inline';
-    stayButton.style.display = 'inline';
+    standButton.style.display = 'inline';
     hiddenCardValue = dealerCards[0].value;
     hiddenCardSuit = dealerCards[0].suit;
     console.log(hiddenCardValue);
@@ -191,7 +191,7 @@ hitButton.addEventListener('click', function () {
     checkForEndOfGame();
     showStatus();
 });
-stayButton.addEventListener('click', function () {
+standButton.addEventListener('click', function () {
     gameOver = true;
     checkForEndOfGame();
     showStatus();
