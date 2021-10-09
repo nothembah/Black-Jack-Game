@@ -133,15 +133,6 @@ function showStatus(): void{
   }
   
   updateScores();
-
-  /*if(gameOver){
-    let dealerCardStringArr: string[] = dealerCardString.split('')
-    dealerCardStringArr = dealerCardStringArr.slice(6, dealerCardStringArr.length);
-    dealerCardStringArr.unshift(hiddenCardSuit);
-    dealerCardStringArr.unshift(' ');
-    dealerCardStringArr.unshift(hiddenCardValue);
-    dealerCardString = dealerCardStringArr.join('');
-  }*/
   
   dealer.innerHTML = 'DEALER: ' + dealerCardString + '(score: ' + dealerScore + ')';
                         
@@ -152,8 +143,7 @@ function showStatus(): void{
       winner.innerHTML = "YOU WIN!";
     } else if(playerWon == true && dealerWon == true){
       winner.innerHTML = "DRAW!"
-    }
-    else {
+    } else {
       winner.innerHTML = "DEALER WINS!";
     }
     newGameButton.style.display = 'inline';
@@ -190,8 +180,6 @@ function updateScores(): void{
       dealerScore = getScore([dealerCards[1]]);
   }
   playerScore = getScore(playerCards);
-
-  console.log(dealerCards);
 }
 
 
@@ -215,8 +203,6 @@ newGameButton.addEventListener('click', function() {
     standButton.style.display = 'inline';
     hiddenCardValue = dealerCards[0].value;
     hiddenCardSuit = dealerCards[0].suit;
-    console.log(hiddenCardValue);
-    console.log(hiddenCardSuit);
     checkForEndOfGame();
     showStatus();
 })

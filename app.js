@@ -110,14 +110,6 @@ function showStatus() {
         playerCardString += getCard(playerCards[i]) + ' ';
     }
     updateScores();
-    /*if(gameOver){
-      let dealerCardStringArr: string[] = dealerCardString.split('')
-      dealerCardStringArr = dealerCardStringArr.slice(6, dealerCardStringArr.length);
-      dealerCardStringArr.unshift(hiddenCardSuit);
-      dealerCardStringArr.unshift(' ');
-      dealerCardStringArr.unshift(hiddenCardValue);
-      dealerCardString = dealerCardStringArr.join('');
-    }*/
     dealer.innerHTML = 'DEALER: ' + dealerCardString + '(score: ' + dealerScore + ')';
     player.innerHTML = 'PLAYER: ' + playerCardString + '(score: ' + playerScore + ')';
     if (gameOver) {
@@ -160,7 +152,6 @@ function updateScores() {
         dealerScore = getScore([dealerCards[1]]);
     }
     playerScore = getScore(playerCards);
-    console.log(dealerCards);
 }
 function produceCard() {
     return deck.shift();
@@ -180,8 +171,6 @@ newGameButton.addEventListener('click', function () {
     standButton.style.display = 'inline';
     hiddenCardValue = dealerCards[0].value;
     hiddenCardSuit = dealerCards[0].suit;
-    console.log(hiddenCardValue);
-    console.log(hiddenCardSuit);
     checkForEndOfGame();
     showStatus();
 });
