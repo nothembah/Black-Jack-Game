@@ -2,19 +2,28 @@
 <html>
     <head>
         <title>Black Jack Game</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+
         <link rel="stylesheet" href="style.css">
+        <script src="app.js" defer></script>
     </head>
     
     <body>
-        <h1>Press "New Game" To Start!</h1>
-        <button id="new">New Game</button>
+        <div class="game">
+            <h1>BlackJack Game</h1>
+            <h3>Press "New Game" To Start!</h3>
+            <button id="new">New Game</button>
+            
+            <p class="display dealer"></p>
+            <p class="display player"></p>
 
-        <div class="cardDiv"></div>
-        <div class="cardDiv"></div>
-
-        <div class="buttons">
-            <button id="hit">Hit</button>
-            <button id="stand">Stand</button>
+            <div class="buttons">
+                <button id="hit" class="gameBtn">Hit</button>
+                <button id="stand" class="gameBtn">Stand</button>
+            </div>
         </div>
 
         <h2 class="winner"></h2>

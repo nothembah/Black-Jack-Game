@@ -1,0 +1,59 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(53, 212, 53);
+}
+
+.game {
+    background-color: whitesmoke;
+    text-align: center;
+    padding: 20px;
+    margin: 100px;
+}
+
+h1 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 70px;
+}
+
+h3 {
+    margin-top: -50px;
+    font-size: 15px;
+}
+
+button {
+    font-size: 20px;
+    border-style: none;
+    padding: 10px;
+    cursor: pointer;
+    background-color: rgb(54, 52, 52);
+    color: white;
+}
+
+.gameBtn :hover{
+    background-color: lightblue;
+}
+
+#new {
+    background-color: rgb(54, 52, 52);
+    color: white;
+    margin-top: 30px;
+}
+
+#new:hover {
+    background-color: rgb(226, 7, 7);
+}
+
+.display {
+    font-size: 20px;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.winner {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 50px;
+    margin-top: -40px;
+    text-align: center;
+    color: red;
+}
