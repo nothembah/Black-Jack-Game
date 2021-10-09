@@ -1,4 +1,3 @@
-let textArea = document.querySelector('.display');
 let dealer = document.querySelector('.dealer');
 let player = document.querySelector('.player');
 let winner = document.querySelector('.winner');
