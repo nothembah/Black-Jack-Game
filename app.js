@@ -1,16 +1,19 @@
+<<<<<<< HEAD
 // <<<<<<< HEAD 
 // ======= 
 var textArea = document.querySelector('.display');
+=======
+>>>>>>> f6f9d10cbe4f83ace04be271a20cdf55cfdb405e
 var dealer = document.querySelector('.dealer');
 var player = document.querySelector('.player');
 var winner = document.querySelector('.winner');
 var newGameButton = document.getElementById('new');
 var hitButton = document.getElementById('hit');
-var stayButton = document.getElementById('stand');
+var standButton = document.getElementById('stand');
 var suits = ['♥', '♣', '♦', '♠'];
 var values = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
 hitButton.style.display = 'none';
-stayButton.style.display = 'none';
+standButton.style.display = 'none';
 var gameStart = false, gameOver = false, playerWon = false, dealerWon = false, dealerCards = [], playerCards = [], dealerScore = 0, playerScore = 0, deck = [], hiddenCardValue, hiddenCardSuit;
 newGameButton.addEventListener('click', function () {
     gameStart = true; //Start of the game 
@@ -143,10 +146,15 @@ function showStatus() {
         playerCardString += getCard(playerCards[i]) + ' ';
     }
     updateScores();
+<<<<<<< HEAD
     //shows current score of the dealer and player
     dealer.innerHTML = 'DEALER: ' + dealerCardString + '(score: ' + dealerScore + ')'; //shows dealer score
     player.innerHTML = 'PLAYER: ' + playerCardString + '(score: ' + playerScore + ')'; //shows players score 
     //[F]- At gameOver displays winner and draw
+=======
+    dealer.innerHTML = 'DEALER: ' + dealerCardString + '(score: ' + dealerScore + ')';
+    player.innerHTML = 'PLAYER: ' + playerCardString + '(score: ' + playerScore + ')';
+>>>>>>> f6f9d10cbe4f83ace04be271a20cdf55cfdb405e
     if (gameOver) {
         if (playerWon == true && dealerWon == false) {
             winner.innerHTML = "YOU WIN!";
@@ -159,7 +167,7 @@ function showStatus() {
         }
         newGameButton.style.display = 'inline';
         hitButton.style.display = 'none';
-        stayButton.style.display = 'none';
+        standButton.style.display = 'none';
     }
 }
 //[G]-gets score of the dealer and player 
@@ -191,19 +199,39 @@ function updateScores() {
         dealerScore = getScore([dealerCards[1]]);
     }
     playerScore = getScore(playerCards);
-    console.log(dealerCards);
 }
 //adds a new card
 function produceCard() {
     return deck.shift();
 }
+<<<<<<< HEAD
 //event listeners for the hit and stay button 
+=======
+newGameButton.addEventListener('click', function () {
+    gameStart = true;
+    gameOver = false;
+    playerWon = false;
+    dealerWon = false;
+    winner.innerHTML = '';
+    deck = createDeck();
+    shuffleDeck(deck);
+    dealerCards = [produceCard(), produceCard()];
+    playerCards = [produceCard(), produceCard()];
+    newGameButton.style.display = 'none';
+    hitButton.style.display = 'inline';
+    standButton.style.display = 'inline';
+    hiddenCardValue = dealerCards[0].value;
+    hiddenCardSuit = dealerCards[0].suit;
+    checkForEndOfGame();
+    showStatus();
+});
+>>>>>>> f6f9d10cbe4f83ace04be271a20cdf55cfdb405e
 hitButton.addEventListener('click', function () {
     playerCards.push(produceCard());
     checkForEndOfGame();
     showStatus();
 });
-stayButton.addEventListener('click', function () {
+standButton.addEventListener('click', function () {
     gameOver = true;
     checkForEndOfGame();
     showStatus();

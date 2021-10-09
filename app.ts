@@ -1,20 +1,23 @@
+<<<<<<< HEAD
 export{}
 
 <<<<<<< HEAD 
 ======= 
 let textArea = document.querySelector('.display');
+=======
+>>>>>>> f6f9d10cbe4f83ace04be271a20cdf55cfdb405e
 let dealer = document.querySelector('.dealer');
 let player = document.querySelector('.player');
 let winner = document.querySelector('.winner');
 let newGameButton = document.getElementById('new');
 let hitButton = document.getElementById('hit');
-let stayButton = document.getElementById('stand');
+let standButton = document.getElementById('stand');
 
 let suits: string[] = ['♥', '♣', '♦', '♠'];    
 let values: string[] = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
 
 hitButton.style.display = 'none';
-stayButton.style.display = 'none';
+standButton.style.display = 'none';
 
 let gameStart = false,
 gameOver: boolean = false,
@@ -183,9 +186,16 @@ function showStatus(): void{
   }
   
   updateScores();
+<<<<<<< HEAD
 
   //shows current score of the dealer and player
   dealer.innerHTML = 'DEALER: ' + dealerCardString + '(score: ' + dealerScore + ')'; //shows dealer score
+=======
+  
+  dealer.innerHTML = 'DEALER: ' + dealerCardString + '(score: ' + dealerScore + ')';
+                        
+  player.innerHTML = 'PLAYER: ' + playerCardString + '(score: ' + playerScore + ')';
+>>>>>>> f6f9d10cbe4f83ace04be271a20cdf55cfdb405e
                         
   player.innerHTML = 'PLAYER: ' + playerCardString + '(score: ' + playerScore + ')';//shows players score 
         
@@ -198,13 +208,12 @@ function showStatus(): void{
       winner.innerHTML = "YOU WIN!";
     } else if(playerWon == true && dealerWon == true){
       winner.innerHTML = "DRAW!"
-    }
-    else {
+    } else {
       winner.innerHTML = "DEALER WINS!";
     }
     newGameButton.style.display = 'inline';
     hitButton.style.display = 'none';
-    stayButton.style.display = 'none';
+    standButton.style.display = 'none';
     
   }
 }
@@ -245,8 +254,6 @@ function updateScores(): void{              //updates the score of the game when
       dealerScore = getScore([dealerCards[1]]);
   }
   playerScore = getScore(playerCards);
-
-  console.log(dealerCards);
 }
 
 
@@ -257,7 +264,22 @@ function produceCard(): {suit: string, value: string} {
 }
 
 
+<<<<<<< HEAD
 //event listeners for the hit and stay button 
+=======
+    deck = createDeck();
+    shuffleDeck(deck);
+    dealerCards = [produceCard(), produceCard()];
+    playerCards = [produceCard(), produceCard()];
+    newGameButton.style.display = 'none';
+    hitButton.style.display = 'inline';
+    standButton.style.display = 'inline';
+    hiddenCardValue = dealerCards[0].value;
+    hiddenCardSuit = dealerCards[0].suit;
+    checkForEndOfGame();
+    showStatus();
+})
+>>>>>>> f6f9d10cbe4f83ace04be271a20cdf55cfdb405e
 
 hitButton.addEventListener('click', function(){
     playerCards.push(produceCard());
@@ -265,7 +287,7 @@ hitButton.addEventListener('click', function(){
     showStatus();
 });
   
-stayButton.addEventListener('click', function(){
+standButton.addEventListener('click', function(){
     gameOver = true;
     checkForEndOfGame();
     showStatus();
