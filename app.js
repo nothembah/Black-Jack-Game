@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-// <<<<<<< HEAD 
-// ======= 
-var textArea = document.querySelector('.display');
-=======
->>>>>>> f6f9d10cbe4f83ace04be271a20cdf55cfdb405e
 var dealer = document.querySelector('.dealer');
 var player = document.querySelector('.player');
 var winner = document.querySelector('.winner');
@@ -15,61 +9,35 @@ var values = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
 hitButton.style.display = 'none';
 standButton.style.display = 'none';
 var gameStart = false, gameOver = false, playerWon = false, dealerWon = false, dealerCards = [], playerCards = [], dealerScore = 0, playerScore = 0, deck = [], hiddenCardValue, hiddenCardSuit;
-newGameButton.addEventListener('click', function () {
-    gameStart = true; //Start of the game 
-    gameOver = false;
-    playerWon = false;
-    dealerWon = false;
-    winner.innerHTML = '';
-    deck = createDeck();
-    shuffleDeck(deck);
-    dealerCards = [produceCard(), produceCard()];
-    playerCards = [produceCard(), produceCard()];
-    newGameButton.style.display = 'none';
-    hitButton.style.display = 'inline';
-    stayButton.style.display = 'inline';
-    hiddenCardValue = dealerCards[0].value;
-    hiddenCardSuit = dealerCards[0].suit;
-    console.log(hiddenCardValue);
-    console.log(hiddenCardSuit);
-    checkForEndOfGame();
-    showStatus();
-});
-//[A]- create the card deck
 function createDeck() {
     var deck = [];
-    for (var suitIdx = 0; suitIdx < suits.length; suitIdx++) { // for loop to iterate through the suit array index 
-        for (var valueIdx = 0; valueIdx < values.length; valueIdx++) { // for loop to iterate through the values array index 
+    for (var suitIdx = 0; suitIdx < suits.length; suitIdx++) {
+        for (var valueIdx = 0; valueIdx < values.length; valueIdx++) {
             var card = {
                 suit: suits[suitIdx],
                 value: values[valueIdx]
             };
-            deck.push(card); //adds values to an empty array
+            deck.push(card);
         }
     }
     return deck;
 }
-//[B] - shuffle the deck
 function shuffleDeck(deck) {
-    for (var i = 0; i < deck.length; i++) { //for turns less than the length of the string length
-        // switch the values of two random cards
-        var swapIdx = Math.floor(Math.random() * deck.length); //random number generator of two random cards 
+    for (var i = 0; i < deck.length; i++) {
+        var swapIdx = Math.floor(Math.random() * deck.length);
         var tmp = deck[swapIdx];
         deck[swapIdx] = deck[i];
         deck[i] = tmp;
     }
 }
-//[C] - check for end of Game and update the score 
 function checkForEndOfGame() {
     updateScores();
-    //check if there is a winner by comparing the current hand of the players and update score 
     if (gameOver) {
         while (dealerScore < playerScore && playerScore <= 21 && dealerScore <= 21) {
             dealerCards.push(produceCard());
             updateScores();
         }
     }
-    //evaluate score to end game 
     if (playerScore == 21 && dealerScore < 21) {
         playerWon = true;
         dealerWon = false;
@@ -101,8 +69,6 @@ function checkForEndOfGame() {
     }
     updateScores();
 }
-//[D]
-// Shows hidden for the second card value of the dealer
 function getCard(card) {
     if (gameOver == false) {
         dealerCards[0].value = "HIDDEN";
@@ -110,7 +76,6 @@ function getCard(card) {
     }
     return card.value + " " + card.suit;
 }
-//switch statement for the weight of card values
 function getCardValue(card) {
     switch (card.value) {
         case 'A':
@@ -135,7 +100,6 @@ function getCardValue(card) {
             return 10;
     }
 }
-//[E]- Displays current hand of the dealer and player 
 function showStatus() {
     var dealerCardString = '';
     for (var i = 0; i < dealerCards.length; i++) {
@@ -146,15 +110,8 @@ function showStatus() {
         playerCardString += getCard(playerCards[i]) + ' ';
     }
     updateScores();
-<<<<<<< HEAD
-    //shows current score of the dealer and player
-    dealer.innerHTML = 'DEALER: ' + dealerCardString + '(score: ' + dealerScore + ')'; //shows dealer score
-    player.innerHTML = 'PLAYER: ' + playerCardString + '(score: ' + playerScore + ')'; //shows players score 
-    //[F]- At gameOver displays winner and draw
-=======
     dealer.innerHTML = 'DEALER: ' + dealerCardString + '(score: ' + dealerScore + ')';
     player.innerHTML = 'PLAYER: ' + playerCardString + '(score: ' + playerScore + ')';
->>>>>>> f6f9d10cbe4f83ace04be271a20cdf55cfdb405e
     if (gameOver) {
         if (playerWon == true && dealerWon == false) {
             winner.innerHTML = "YOU WIN!";
@@ -170,27 +127,23 @@ function showStatus() {
         standButton.style.display = 'none';
     }
 }
-//[G]-gets score of the dealer and player 
 function getScore(cardArray) {
     var score = 0;
     var hasAce = false;
     for (var i = 0; i < cardArray.length; i++) {
         var card = cardArray[i];
         score += getCardValue(card);
-        //The ace is evaluated at the end of the game to check to choose winner 
         if (card.value == 'A') {
             hasAce = true;
         }
-        if (hasAce && score + 10 <= 21) { //if 'A'= true and value of score of the player or dealer is less than 21
-            score += 10; // 10 is added to score i.e 'A' = 10
+        if (hasAce && score + 10 <= 21) {
+            score += 10;
         }
     }
     return score;
 }
-//[H] -
 function updateScores() {
     if (gameOver == true) {
-        //shows hidden card of the dealer
         dealerCards[0].value = hiddenCardValue;
         dealerCards[0].suit = hiddenCardSuit;
         dealerScore = getScore(dealerCards);
@@ -200,13 +153,9 @@ function updateScores() {
     }
     playerScore = getScore(playerCards);
 }
-//adds a new card
 function produceCard() {
     return deck.shift();
 }
-<<<<<<< HEAD
-//event listeners for the hit and stay button 
-=======
 newGameButton.addEventListener('click', function () {
     gameStart = true;
     gameOver = false;
@@ -225,7 +174,6 @@ newGameButton.addEventListener('click', function () {
     checkForEndOfGame();
     showStatus();
 });
->>>>>>> f6f9d10cbe4f83ace04be271a20cdf55cfdb405e
 hitButton.addEventListener('click', function () {
     playerCards.push(produceCard());
     checkForEndOfGame();
@@ -236,4 +184,3 @@ standButton.addEventListener('click', function () {
     checkForEndOfGame();
     showStatus();
 });
-// >>>>>>> 3c9569fc2f18d6287afc5591d2ef6e64584827f8
