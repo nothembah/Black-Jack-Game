@@ -1,3 +1,4 @@
+//selects html attributes
 let dealer = document.querySelector('.dealer');
 let player = document.querySelector('.player');
 let winner = document.querySelector('.winner');
@@ -5,12 +6,15 @@ let newGameButton = document.getElementById('new');
 let hitButton = document.getElementById('hit');
 let standButton = document.getElementById('stand');
 
+//define posible card suits and values
 let suits: string[] = ['♥', '♣', '♦', '♠'];
 let values: string[] = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
 
+//hides hit and stand button
 hitButton.style.display = 'none';
 standButton.style.display = 'none';
 
+//declare global variables
 let gameStart = false,
 gameOver: boolean = false,
 playerWon: boolean = false,
@@ -23,6 +27,7 @@ deck: {suit: string, value: string}[] = [],
 hiddenCardValue: string,
 hiddenCardSuit: string;
 
+//creates array of all cards
 function createDeck(): {suit: string, value: string}[] {
   let deck = []
   for (let suitIdx = 0; suitIdx < suits.length; suitIdx++) {
@@ -37,15 +42,17 @@ function createDeck(): {suit: string, value: string}[] {
   return deck;
 }
 
+//swaps card array index for random shuffle
 function shuffleDeck(deck: {suit: string, value: string}[]): void{
   for(let i = 0; i < deck.length; i++){
-    let swapIdx = Math.floor(Math.random() *deck.length);
+    let swapIdx = Math.floor(Math.random() *deck.length); //random index
     let tmp = deck[swapIdx];
     deck[swapIdx] = deck[i];
     deck[i] = tmp; 
   }
 }
 
+//checks if game has reached its end
 function checkForEndOfGame(): void{
   updateScores();
   
@@ -85,6 +92,7 @@ function checkForEndOfGame(): void{
     updateScores();
 }
 
+//gets card string for display
 function getCard(card: {suit: string, value: string}): string {
 
   if(gameOver == false){
@@ -95,6 +103,7 @@ function getCard(card: {suit: string, value: string}): string {
   return card.value + " " + card.suit;
 }
 
+//Gets weight of card
 function getCardValue(card: {suit: string, value: string}): number{
   switch(card.value){
     case 'A':
@@ -120,6 +129,7 @@ function getCardValue(card: {suit: string, value: string}): number{
   }
 }
 
+//displays current cards, score and game result
 function showStatus(): void{
 
   let dealerCardString = '';
@@ -134,10 +144,12 @@ function showStatus(): void{
   
   updateScores();
   
+  //shows current score of the dealer and player
   dealer.innerHTML = 'DEALER: ' + dealerCardString + '(score: ' + dealerScore + ')';
                         
   player.innerHTML = 'PLAYER: ' + playerCardString + '(score: ' + playerScore + ')';
-                        
+  
+  //At gameOver displays winner and draw
   if(gameOver){
     if(playerWon == true && dealerWon == false){
       winner.innerHTML = "YOU WIN!";
@@ -153,6 +165,7 @@ function showStatus(): void{
   }
 }
 
+//calculate score of respective card array
 function getScore(cardArray: {suit: string, value: string}[]): number{
   let score: number = 0;
   let hasAce: boolean = false;
@@ -171,6 +184,7 @@ function getScore(cardArray: {suit: string, value: string}[]): number{
    return score; 
 }
 
+//gets score of the dealer and player 
 function updateScores(): void{
   if(gameOver == true){
       dealerCards[0].value = hiddenCardValue;
@@ -182,13 +196,14 @@ function updateScores(): void{
   playerScore = getScore(playerCards);
 }
 
-
+//adds a new card
 function produceCard(): {suit: string, value: string} {
   return deck.shift();
 }
 
+//event listeners for buttons 
 newGameButton.addEventListener('click', function() {
-    gameStart = true;
+    gameStart = true; //Start of the game 
     gameOver = false;
     playerWon = false;
     dealerWon = false;
