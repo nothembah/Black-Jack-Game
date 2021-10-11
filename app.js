@@ -183,7 +183,7 @@ function updateScores() {
 }
 //adds a new card
 function produceCard() {
-    return deck.shift();
+    return deck.pop();
 }
 //event listeners for buttons 
 newGameButton.addEventListener('click', function () {

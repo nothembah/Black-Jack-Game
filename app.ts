@@ -213,7 +213,7 @@ function updateScores(): void{
 
 //adds a new card
 function produceCard(): {suit: string, value: string} {
-  return deck.shift();
+  return deck.pop();
 }
 
 //event listeners for buttons 
