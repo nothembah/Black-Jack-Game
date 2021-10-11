@@ -5,6 +5,8 @@ let winner = document.querySelector('.winner');
 let newGameButton = document.getElementById('new');
 let hitButton = document.getElementById('hit');
 let standButton = document.getElementById('stand');
+let dealerCardImg = document.querySelector('.dealerImg');
+let playerCardImg = document.querySelector('.playerImg');
 
 //define posible card suits and values
 let suits: string[] = ['♥', '♣', '♦', '♠'];
@@ -29,10 +31,10 @@ hiddenCardSuit: string;
 
 //creates array of all cards
 function createDeck(): {suit: string, value: string}[] {
-  let deck = []
+  let deck:{suit: string, value: string}[] = []
   for (let suitIdx = 0; suitIdx < suits.length; suitIdx++) {
     for (let valueIdx = 0; valueIdx < values.length; valueIdx++) {
-      let card = {
+      let card: {suit: string, value: string} = {
         suit: suits[suitIdx],
         value: values[valueIdx]
       }
@@ -45,8 +47,8 @@ function createDeck(): {suit: string, value: string}[] {
 //swaps card array index for random shuffle
 function shuffleDeck(deck: {suit: string, value: string}[]): void{
   for(let i = 0; i < deck.length; i++){
-    let swapIdx = Math.floor(Math.random() *deck.length); //random index
-    let tmp = deck[swapIdx];
+    let swapIdx: number = Math.floor(Math.random() *deck.length); //random index
+    let tmp: {suit: string, value: string} = deck[swapIdx];
     deck[swapIdx] = deck[i];
     deck[i] = tmp; 
   }
@@ -141,13 +143,26 @@ function showStatus(): void{
   for(let i = 0; i < playerCards.length; i++){
     playerCardString += getCard(playerCards[i]) + ' ';
   }
+
+  dealerCardImg.innerHTML = '';
+  playerCardImg.innerHTML = '';
   
   updateScores();
   
-  //shows current score of the dealer and player
+  //shows current score of the dealer and player and displays cards
   dealer.innerHTML = 'DEALER: ' + dealerCardString + '(score: ' + dealerScore + ')';
+  for(let j = 0; j < dealerCards.length; j++){
+    if(gameOver == false && j == 0){
+      dealerCardImg.innerHTML += `<img src='images/${dealerCards[j].value}.png'>`
+      continue;
+    }
+    dealerCardImg.innerHTML += `<img src='images/${dealerCards[j].value} ${dealerCards[j].suit}.png'>`
+  }
                         
   player.innerHTML = 'PLAYER: ' + playerCardString + '(score: ' + playerScore + ')';
+  for(let j = 0; j < playerCards.length; j++){
+    playerCardImg.innerHTML += `<img src='images/${playerCards[j].value} ${playerCards[j].suit}.png'>`
+  }
   
   //At gameOver displays winner and draw
   if(gameOver){
@@ -208,6 +223,8 @@ newGameButton.addEventListener('click', function() {
     playerWon = false;
     dealerWon = false;
     winner.innerHTML = '';
+    dealerCardImg.innerHTML = '';
+    playerCardImg.innerHTML = '';
 
     deck = createDeck();
     shuffleDeck(deck);

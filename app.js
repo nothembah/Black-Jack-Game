@@ -5,6 +5,8 @@ var winner = document.querySelector('.winner');
 var newGameButton = document.getElementById('new');
 var hitButton = document.getElementById('hit');
 var standButton = document.getElementById('stand');
+var dealerCardImg = document.querySelector('.dealerImg');
+var playerCardImg = document.querySelector('.playerImg');
 //define posible card suits and values
 var suits = ['♥', '♣', '♦', '♠'];
 var values = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
@@ -119,10 +121,22 @@ function showStatus() {
     for (var i = 0; i < playerCards.length; i++) {
         playerCardString += getCard(playerCards[i]) + ' ';
     }
+    dealerCardImg.innerHTML = '';
+    playerCardImg.innerHTML = '';
     updateScores();
-    //shows current score of the dealer and player
+    //shows current score of the dealer and player and displays cards
     dealer.innerHTML = 'DEALER: ' + dealerCardString + '(score: ' + dealerScore + ')';
+    for (var j = 0; j < dealerCards.length; j++) {
+        if (gameOver == false && j == 0) {
+            dealerCardImg.innerHTML += "<img src='images/" + dealerCards[j].value + ".png'>";
+            continue;
+        }
+        dealerCardImg.innerHTML += "<img src='images/" + dealerCards[j].value + " " + dealerCards[j].suit + ".png'>";
+    }
     player.innerHTML = 'PLAYER: ' + playerCardString + '(score: ' + playerScore + ')';
+    for (var j = 0; j < playerCards.length; j++) {
+        playerCardImg.innerHTML += "<img src='images/" + playerCards[j].value + " " + playerCards[j].suit + ".png'>";
+    }
     //At gameOver displays winner and draw
     if (gameOver) {
         if (playerWon == true && dealerWon == false) {
@@ -178,6 +192,8 @@ newGameButton.addEventListener('click', function () {
     playerWon = false;
     dealerWon = false;
     winner.innerHTML = '';
+    dealerCardImg.innerHTML = '';
+    playerCardImg.innerHTML = '';
     deck = createDeck();
     shuffleDeck(deck);
     dealerCards = [produceCard(), produceCard()];
